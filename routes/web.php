@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController; // 課題:追記
 use App\Http\Controllers\ItemController; // 追記
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/**
+ * GETリクエストのルーティング
+ * ItemControllerクラスのindex()を実行
+ */
 Route::get('/item', [ItemController::class, 'index']); // 追記
+
+/**
+ * GETリクエスト
+ * AdminControllerクラスのindex()を実行
+ */
+Route::get('/admins', [AdminController::class,'index']);

@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>商品編集ページ</title>
+    <title>管理者編集ページ</title>
 </head>
 <body>
-    <h1>商品編集ページ</h1>
-    {{-- {{ $id }} のように渡された変数名のまま記載 --}}
-    <div>パラメータ : {{ $id }}</div>
+    <h1>管理者編集ページ</h1>
+    <div>パラメータ : {{$id}}</div>
 </body>
 </html>

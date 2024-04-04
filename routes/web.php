@@ -20,13 +20,60 @@ Route::get('/', function () {
 });
 
 /**
+ * 商品一覧ページ
  * GETリクエストのルーティング
  * ItemControllerクラスのindex()を実行
  */
 Route::get('/item', [ItemController::class, 'index']); // 追記
 
 /**
+ * 商品編集ページ
+ * GETリクエスト
+ * ItemControllerクラスのshowEdit()を実行
+ * {id}のようにパスパラメータを受け取る設定
+ */
+Route::get('item/edit/{id}', [ItemController::class, 'showEdit']);
+
+/**
+ * 商品登録ページ
+ * GETリクエスト
+ * ItemControllerクラスのshowAdd()を実行
+ */
+Route::get('item/add', [ItemController::class, 'showAdd']);
+
+/**
+ * 商品登録実行
+ * POSTリクエスト
+ * ItemControllerクラスのadd()を実行
+ */
+Route::post('item/add', [ItemController::class, 'add']);
+
+/************************************************************************************/
+
+/**
+ * 管理者一覧ページ
  * GETリクエスト
  * AdminControllerクラスのindex()を実行
  */
 Route::get('/admins', [AdminController::class,'index']);
+
+/**
+ * 管理者編集ページ
+ * GETリクエスト
+ * AdminControllerクラスのshowEdit()を実行
+ */
+Route::get('admin/edit/{id}', [AdminController::class, 'showEdit']);
+
+/**
+ * 管理者登録ページ
+ * GETリクエスト
+ * AdminControllerクラスのshowAdd()を実行
+ */
+Route::get('admin/add', [AdminController::class, 'showAdd']);
+
+/**
+ * 管理者登録実行
+ * POSTリクエスト
+ * AdminControllerクラスのadd()を実行
+ */
+Route::post('admin/add', [AdminController::class, 'add']);

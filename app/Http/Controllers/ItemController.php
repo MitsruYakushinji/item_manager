@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -7,8 +9,11 @@ class ItemController extends Controller
     // 商品一覧ページの表示
     public function index()
     {
-        // index.blade.php を返却
-        return view("item.index");
+        // Itemクラスを介してitemsテーブルのデータを全件取得(allはModelにもともと用意されているメソッド)
+        $items = Item::all();
+
+        // 画面で利用する変数として$itemsを連想配列で index.blade.php に渡す。
+        return view("item.index", ['items' => $items]);
     }
 
     // 商品編集ページ

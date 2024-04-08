@@ -8,7 +8,26 @@
 </head>
 <body>
     <h1>商品編集ページ</h1>
-    {{-- {{ $id }} のように渡された変数名のまま記載 --}}
-    <div>パラメータ : {{ $id }}</div>
+    <form action="{{ url('item/edit/'. $item->id) }}" method="post">
+        @csrf
+        <div>
+            <label>商品名</label>
+        </div>
+        <div>
+            <input type="text" name="name" value="{{ $item->name }}" placeholder="商品名を入力">
+        </div>
+        <div>
+            <label>価格</label>
+        </div>
+        <div>
+            <input type="number" name="price" value="{{ $item->price }}" placeholder="価格を入力">
+        </div>
+        <div>
+            <input type="submit" name="send" value="更新">
+        </div>
+        <div>
+            <a href="{{ url('item') }}">戻る</a>
+        </div>
+    </form>
 </body>
 </html>

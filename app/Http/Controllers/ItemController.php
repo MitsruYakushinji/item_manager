@@ -22,10 +22,27 @@ class ItemController extends Controller
      */
     public function showEdit($id)
     {
-        // view/item/edit.blade.phpに渡ってきた「id」を渡しながら返却
+        // 商品データを1件取得
+        $item = Item::find($id);
+
         // '画面で利用する変数名' => 渡したい値
-        return view('item.edit', ['id'=> $id]);
+        // 画面で利用する変数として$itemを連想配列で渡す
+        return view('item.edit', ['item'=> $item]);
     }
+
+    // 商品編集の実行
+    public function edit($id, Request $request)
+    {
+        // 商品データを1件取得
+        $item = Item::find($id);
+
+        // リクエストからModelのfillableに設定したプロパティのみ抽出・保存
+        $item->fill($request->all())->save();
+
+        // http://localhost/item_manager/public/item にリダイレクト
+        return redirect('/item');
+    }
+
 
     // 商品登録ページ
     public function showAdd()
@@ -38,11 +55,21 @@ class ItemController extends Controller
     public function add(Request $request)
     {
         // フォームに入力した(すべての)値の確認
-        dd($request->all());
+        // dd();はデバック用
+        // dd($request->all());
 
         // パラメータを個別に参照する場合は以下のように記述
         // $request->name
         // $request->price
         // それぞれ name属性 を指定
+
+        // ここから実装内容
+        $item = new Item;
+
+        // リクエストからModelの$fillableに設定したプロパティのみを抽出・保存
+        $item->fill($request->all())->save();
+
+        // http://localhost/item_manager/public/item にリダイレクト
+        return redirect('/item');
     }
 }

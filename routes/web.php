@@ -35,6 +35,14 @@ Route::get('/item', [ItemController::class, 'index']); // 追記
 Route::get('item/edit/{id}', [ItemController::class, 'showEdit']);
 
 /**
+ * 商品編集実行
+ * POSTリクエスト
+ * ItemControllerクラスのedit()を実行
+ * パスパラメータは上に同じ
+ */
+Route::post('item/edit/{id}', [ItemController::class, 'edit']);
+
+/**
  * 商品登録ページ
  * GETリクエスト
  * ItemControllerクラスのshowAdd()を実行

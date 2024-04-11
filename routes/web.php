@@ -56,6 +56,13 @@ Route::get('item/add', [ItemController::class, 'showAdd']);
  */
 Route::post('item/add', [ItemController::class, 'add']);
 
+/**
+ * 商品削除
+ * POSTリクエスト
+ * ItemControllerクラスのdelete()を実行
+ */
+Route::post('item/delete/{id}', [ItemController::class, 'delete']);
+
 /************************************************************************************/
 
 /**
@@ -73,6 +80,13 @@ Route::get('/admins', [AdminController::class,'index']);
 Route::get('admin/edit/{id}', [AdminController::class, 'showEdit']);
 
 /**
+ * 管理者編集実行
+ * POSTリクエスト
+ * AdminControllerクラスのedit()を実行
+ */
+Route::post('admin/edit/{id}', [AdminController::class, 'edit']);
+
+/**
  * 管理者登録ページ
  * GETリクエスト
  * AdminControllerクラスのshowAdd()を実行
@@ -85,3 +99,10 @@ Route::get('admin/add', [AdminController::class, 'showAdd']);
  * AdminControllerクラスのadd()を実行
  */
 Route::post('admin/add', [AdminController::class, 'add']);
+
+/**
+ * 管理者削除
+ * POSTリクエスト
+ * AdminControllerクラスのdelete()を実行
+ */
+Route::post('admin/delete/{id}', [AdminController::class, 'delete']);

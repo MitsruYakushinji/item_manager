@@ -9,7 +9,7 @@
 <body>
     <h1>商品一覧ページ</h1>
     <div>
-        <a href="{{ url('item/add') }}">新規登録</a>
+        <a href="{{ url('item/add') }}">商品新規登録</a>
     </div>
     <table>
         <thead>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ItemController extends Controller
 {
@@ -43,7 +44,6 @@ class ItemController extends Controller
         return redirect('/item');
     }
 
-
     // 商品登録ページ
     public function showAdd()
     {
@@ -64,12 +64,33 @@ class ItemController extends Controller
         // それぞれ name属性 を指定
 
         // ここから実装内容
-        $item = new Item;
+        $item = new Item();
 
         // リクエストからModelの$fillableに設定したプロパティのみを抽出・保存
-        $item->fill($request->all())->save();
+        if($item->fill($request->all())->save()){
+            // ログの出力
+            Log::info('商品の登録が正常に行われました', ['item_id' => $item->id]);
+            return redirect('/item');
+        }
 
-        // http://localhost/item_manager/public/item にリダイレクト
+        Log::error('商品の登録ができませんでした', ['data' => $item->all()]);
+        return redirect('/item');
+    }
+
+    // 商品削除(物理削除)
+    public function delete($id)
+    {
+        // 商品データを1件取得
+        $item = Item::find($id);
+
+        // 削除
+        if($item->delete()){
+            // ログの出力
+            Log::info('商品の削除が正常に行われました', ['item_id' => $item->id]);
+            return redirect('/item');
+        }
+
+        Log::error('商品の削除ができませんでした', ['data' => $item->all()]);
         return redirect('/item');
     }
 }

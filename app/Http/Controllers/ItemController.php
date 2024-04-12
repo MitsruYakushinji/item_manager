@@ -11,7 +11,42 @@ class ItemController extends Controller
     public function index()
     {
         // Itemクラスを介してitemsテーブルのデータを全件取得(allはModelにもともと用意されているメソッド)
-        $items = Item::all();
+        // $items = Item::all();
+
+        // whereNullを利用してdeleted_atがnullのデータのみを検索
+        $sql = Item::query()->whereNull("deleted_at");
+
+        // クエリの確認
+        //var_dump($query->toSql());
+
+        // データを取得
+        $items = $sql->get();
+
+        // 画面で利用する変数として$itemsを連想配列で index.blade.php に渡す。
+        return view("item.index", ['items' => $items]);
+    }
+
+    // 商品検索
+    public function search(Request $request)
+    {
+        // クエリビルダを準備 whereNullを利用してdeleted_atがnullのデータのみを検索
+        $sql = Item::query()->whereNull("deleted_at");
+
+        // リクエストを取得してわかりやすいように
+        $re = $request->all();
+
+        // リクエストに name が含まれれば WHERE を追加(and)
+        if (!empty($re['name'])) {
+            $sql->where('name', $re['name']);
+        }
+
+        // リクエストに price が含まれていれば WHERE を追加(and)
+        if (!empty($re['price'])) {
+            $sql->where('price', $re['price']);
+        }
+
+        // データを取得
+        $items = $sql->get();
 
         // 画面で利用する変数として$itemsを連想配列で index.blade.php に渡す。
         return view("item.index", ['items' => $items]);
@@ -28,7 +63,7 @@ class ItemController extends Controller
 
         // '画面で利用する変数名' => 渡したい値
         // 画面で利用する変数として$itemを連想配列で渡す
-        return view('item.edit', ['item'=> $item]);
+        return view('item.edit', ['item' => $item]);
     }
 
     // 商品編集の実行
@@ -67,7 +102,7 @@ class ItemController extends Controller
         $item = new Item();
 
         // リクエストからModelの$fillableに設定したプロパティのみを抽出・保存
-        if($item->fill($request->all())->save()){
+        if ($item->fill($request->all())->save()) {
             // ログの出力
             Log::info('商品の登録が正常に行われました', ['item_id' => $item->id]);
             return redirect('/item');
@@ -83,8 +118,16 @@ class ItemController extends Controller
         // 商品データを1件取得
         $item = Item::find($id);
 
-        // 削除
-        if($item->delete()){
+        // 現在日時を取得、フォーマットを変換
+        $date = date("Y-m-d H:i:s");
+
+        // deleted_atに取得した日時を保存
+        $item->deleted_at = $date;
+
+        $item->save();
+
+        // 論理削除
+        if (!empty($item->deleted_at)) {
             // ログの出力
             Log::info('商品の削除が正常に行われました', ['item_id' => $item->id]);
             return redirect('/item');

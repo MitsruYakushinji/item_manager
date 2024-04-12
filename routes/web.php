@@ -27,6 +27,13 @@ Route::get('/', function () {
 Route::get('/item', [ItemController::class, 'index']); // 追記
 
 /**
+ * 商品検索
+ * GETリクエスト
+ * ItemControllerクラスのsearch()を実行
+ */
+Route::get('/item', [ItemController::class,'search']);
+
+/**
  * 商品編集ページ
  * GETリクエスト
  * ItemControllerクラスのshowEdit()を実行
